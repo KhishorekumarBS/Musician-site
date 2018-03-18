@@ -98,6 +98,9 @@ app.get('/photos', function(req, res){
 });
 
 
+app.get('/eventsinput', function(req, res){
+  res.render('events' , { message:'Enter Event Details' });
+});
 
 
 
@@ -110,8 +113,8 @@ app.get('/update1', function(req, res) {
 
 app.post('/authenticate', function(req, res) {
   if(req.body.password == 'Admin' && req.body.user == 'Admin')
-  {
-    res.render('events' , { message:'Enter Event Details' });
+  { res.redirect('/eventsinput');
+    
   }
   else
   {
