@@ -12,6 +12,7 @@ var pass; //present level of the user
 var usern;
 var dateofvent;
 var prname; 
+var i=0;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // connect the api routes under /api/*
@@ -30,12 +31,17 @@ app.set('view engine', 'ejs');
  
 // viewed at http://localhost:8080
 app.get('/', function(req, res){
-  var filePath = "./views/home.html"
- 		var resolvedPath = path.resolve(filePath);
- 		console.log(resolvedPath);
- 		return res.sendFile(resolvedPath);
+    Event.find({}).sort({dovenue:1}).exec(function(err, obj) { 
+  		for(;i>=0;i++)
+  		{   
+  			if(obj[i].dovenue>Date.now())
+  			{	console.log(obj[i].dovenue);
+  				break;
+  			}
+  		}
+   		res.render('home',{Date:obj[i].dovenue.getDate()+'/' + (obj[i].dovenue.getMonth()+1) + '/'+obj[i].dovenue.getFullYear(),Venue:obj[i].Venue});
+	});
 });
-
 app.get('/project', function(req, res){
   var filePath = "./views/Project.html"
  		var resolvedPath = path.resolve(filePath);
